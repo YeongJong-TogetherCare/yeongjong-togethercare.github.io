@@ -130,8 +130,8 @@ open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
 font_path = next((p for p in [r'C:\Windows\Fonts\malgunbd.ttf', r'C:\Windows\Fonts\malgun.ttf'] if os.path.exists(p)), None)
-# QR only to the Linktree page (user decision 2026-11-08); centers are reached from its buttons
-targets = [('linktree', LINKTREE, '영종 다함께 돌봄센터 신청 안내')]
+# QR straight to the landing page (user decision 2026-11-08 22:00): flyer -> locations -> icon -> form
+targets = [('main', SITE, '영종 다함께 돌봄센터 돌봄 신청')]
 for key, url, label in targets:
     q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=30, border=4)
     q.add_data(url); q.make(fit=True)
