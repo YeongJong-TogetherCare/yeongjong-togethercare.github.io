@@ -21,8 +21,16 @@ CAPACITY = {'8': '정원 20명 내외', '9': '정원 35명 내외', '10': '정�
 esc = html.escape
 
 
+# one Google Form per center (given by the user 2026-11-08 22:45); each form has no center question
+CENTER_FORMS = {
+    '다함께 돌봄센터 8호점': 'https://forms.gle/E5fAy72eKyufHbdG8',
+    '다함께 돌봄센터 9호점': 'https://forms.gle/rEWt49MLSrKaP9ddA',
+    '다함께 돌봄센터 10호점': 'https://forms.gle/4vLJVJH1ge7mgqMZ7',
+}
+
+
 def form_url(name):
-    return FORM + '?usp=pp_url&' + urllib.parse.urlencode({ENTRY: name})
+    return CENTER_FORMS[name]
 
 
 def flyers(n):
@@ -74,7 +82,7 @@ for n, name, addr in CENTERS:
 <a class="btn" href="{esc(form_url(name))}">{esc(n)}호점 신청하기</a>
 </section>
 <a class="link" href="{LINKTREE}">다른 호점 보기</a>
-<p class="note">신청서에는 이용 센터가 「{esc(name)}」으로 미리 선택되어 있습니다.</p>"""
+<p class="note">「{esc(name)}」 전용 신청서가 열립니다.</p>"""
     open(os.path.join(ROOT, f'{n}.html'), 'w', encoding='utf-8').write(page(f'다함께돌봄 {n}호점 신청', body))
 
 # ---- landing page (QR target): flyer -> center locations -> "신청하고 싶어요" icon -> prefilled form ----
@@ -146,7 +154,7 @@ land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청<
 {info_html}
 <h2 class="sec">센터 위치</h2>
 {centers_html}
-<p class="note">누르면 구글 신청서가 열리고, 고르신 센터가 미리 체크되어 있습니다. 나머지 칸을 채우고 「제출」을 눌러 주세요.</p>"""
+<p class="note">누르면 그 호점의 구글 신청서가 열립니다. 칸을 채우고 「제출」을 눌러 주세요.</p>"""
 open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
     f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
