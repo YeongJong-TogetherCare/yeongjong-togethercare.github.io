@@ -8,7 +8,7 @@ import qrcode
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-SITE = 'https://park-hyun-su.github.io/dahamkke-dolbom/'
+SITE = 'https://yeongjong-togethercare.github.io/'
 LINKTREE = 'https://linktr.ee/YeongJong_Together_Care_Center'
 FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfJHSxFiwpyxkl7W1CWkbjg26NQrutEgFMD_qZciQFK3CMH-A/viewform'
 ENTRY = 'entry.1460899233'
