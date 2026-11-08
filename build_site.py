@@ -2,13 +2,14 @@
 Pages: index.html (all centers, choose one) and 8.html / 9.html / 10.html (one center).
 Each center page shows its flyer (flyers/<n>.jpg|png|pdf when present) and a 신청하기 button that opens
 the Google Form with that center already checked (prefilled entry.1460899233).
-QR PNGs in qr/ point at the GitHub Pages URLs. Rerun after adding or replacing flyers."""
+QR PNG in qr/ points at the Linktree page, whose 8/9/10 buttons open these pages. Rerun after adding or replacing flyers."""
 import os, glob, html, urllib.parse
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 SITE = 'https://park-hyun-su.github.io/dahamkke-dolbom/'
+LINKTREE = 'https://linktr.ee/YeongJong_Together_Care_Center'
 FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfJHSxFiwpyxkl7W1CWkbjg26NQrutEgFMD_qZciQFK3CMH-A/viewform'
 ENTRY = 'entry.1460899233'
 CENTERS = [  # name = exact option text in the form; address from the form description
@@ -71,7 +72,7 @@ for n, name, addr in CENTERS:
 <p class="addr">위치: {esc(addr)}</p>
 <a class="btn" href="{esc(form_url(name))}">{esc(n)}호점 신청하기</a>
 </section>
-<a class="link" href="./">다른 호점 보기</a>
+<a class="link" href="{LINKTREE}">다른 호점 보기</a>
 <p class="note">신청서에는 이용 센터가 「{esc(name)}」으로 미리 선택되어 있습니다.</p>"""
     open(os.path.join(ROOT, f'{n}.html'), 'w', encoding='utf-8').write(page(f'다함께돌봄 {n}호점 신청', body))
 
@@ -84,7 +85,8 @@ open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(page('다함
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
 font_path = next((p for p in [r'C:\Windows\Fonts\malgunbd.ttf', r'C:\Windows\Fonts\malgun.ttf'] if os.path.exists(p)), None)
-targets = [('all', SITE, '영종 다함께 돌봄센터 신청 안내')] + [(n, SITE + f'{n}.html', f'영종 {name} 신청') for n, name, _ in CENTERS]
+# QR only to the Linktree page (user decision 2026-11-08); centers are reached from its buttons
+targets = [('linktree', LINKTREE, '영종 다함께 돌봄센터 신청 안내')]
 for key, url, label in targets:
     q = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=30, border=4)
     q.add_data(url); q.make(fit=True)
