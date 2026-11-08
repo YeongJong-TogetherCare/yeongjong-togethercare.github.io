@@ -116,10 +116,34 @@ def main_flyers():
     return ''.join(out)
 
 
+# readable text version of the poster table (the poster image the centre supplied is only 398x540 px,
+# so its table text is blurry on phones). Wording copied from the poster; do not edit content here.
+POSTER_INFO = [
+    ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동 (만 6세이나 입학 전 아동 포함)', '정원 초과 시 우선순위에 따라 선발']),
+    ('접수 방법', ['2026.11.12일부터 9시부터 전화 및 방문접수 (평일 10시 ~ 18시)', '별도의 차량운행을 하지 않습니다.']),
+    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '정원 마감 전까지 선착순 접수 마감합니다.']),
+    ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 1일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
+    ('이용 시간', ['학기 중: 13시 ~ 20시 (주말 공휴일 제외)', '방학 중: 09시 ~ 18시 (주말 공휴일 제외)']),
+    ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동 프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
+]
+info_html = '<div class="infobox">' + ''.join(
+    f'<div class="row"><div class="k">{esc(k)}</div><div class="v">' + ''.join(f'<p>{esc(x)}</p>' for x in vs) + '</div></div>'
+    for k, vs in POSTER_INFO) + '</div>'
+LAND_CSS += """
+.infobox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 16px;margin:0 0 22px}
+.infobox .row{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.infobox .row:last-child{border-bottom:none}
+.infobox .k{flex:none;width:72px;font-weight:700;font-size:15px}
+.infobox .v{flex:1;min-width:0;font-size:15px}
+.infobox .v p{margin:0}
+"""
+
 centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}</p></div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
 land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1><p>전단지를 보시고, 다닐 센터의 「신청하고 싶어요」를 눌러 주세요.</p></div>
 {main_flyers()}
+<h2 class="sec">모집 안내</h2>
+{info_html}
 <h2 class="sec">센터 위치</h2>
 {centers_html}
 <p class="note">누르면 구글 신청서가 열리고, 고르신 센터가 미리 체크되어 있습니다. 나머지 칸을 채우고 「제출」을 눌러 주세요.</p>"""
