@@ -12,11 +12,12 @@ SITE = 'https://park-hyun-su.github.io/dahamkke-dolbom/'
 LINKTREE = 'https://linktr.ee/YeongJong_Together_Care_Center'
 FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSfJHSxFiwpyxkl7W1CWkbjg26NQrutEgFMD_qZciQFK3CMH-A/viewform'
 ENTRY = 'entry.1460899233'
-CENTERS = [  # name = exact option text in the form; address from the form description
+CENTERS = [  # name = exact option text in the form; address from the form description / flyer
     ('8', '다함께 돌봄센터 8호점', '찬들로 142, 커뮤니티센터 지상 1층'),
     ('9', '다함께 돌봄센터 9호점', '영종대로565번길 20, 커뮤니티센터 지상 1층'),
     ('10', '다함께 돌봄센터 10호점', '은하수로 412, 커뮤니티센터 지하 1층'),
 ]
+CAPACITY = {'8': '정원 20명 내외', '9': '정원 35명 내외', '10': '정원 20명 내외'}  # from the flyer (flyers/main.jpg)
 esc = html.escape
 
 
@@ -115,7 +116,7 @@ def main_flyers():
     return ''.join(out)
 
 
-centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}</p></div>
+centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}</p></div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
 land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1><p>전단지를 보시고, 다닐 센터의 「신청하고 싶어요」를 눌러 주세요.</p></div>
 {main_flyers()}
