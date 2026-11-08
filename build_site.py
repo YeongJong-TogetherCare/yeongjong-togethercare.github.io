@@ -148,7 +148,7 @@ LAND_CSS += """
 
 centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}</p></div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
-land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1><p>전단지를 보시고, 다닐 센터의 「신청하고 싶어요」를 눌러 주세요.</p></div>
+land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1></div>
 {main_flyers()}
 <h2 class="sec">모집 안내</h2>
 {info_html}
