@@ -76,11 +76,56 @@ for n, name, addr in CENTERS:
 <p class="note">신청서에는 이용 센터가 「{esc(name)}」으로 미리 선택되어 있습니다.</p>"""
     open(os.path.join(ROOT, f'{n}.html'), 'w', encoding='utf-8').write(page(f'다함께돌봄 {n}호점 신청', body))
 
-cards = ''.join(f"""<section class="card"><h2>{esc(name)}</h2><p class="addr">{esc(addr)}</p>
-{flyer_html(n, name)}<a class="btn" href="{n}.html">{esc(n)}호점 안내 보고 신청하기</a></section>""" for n, name, addr in CENTERS)
-body = f"""<h1>영종 다함께 돌봄센터 신청 안내</h1>
-<p class="sub">이용하실 센터를 골라 홍보지를 보시고 신청해 주세요.</p>{cards}"""
-open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(page('다함께돌봄 신청 안내', body))
+# ---- landing page (QR target): flyer -> center locations -> "신청하고 싶어요" icon -> prefilled form ----
+LAND_CSS = """
+:root{--bg:#fffaf0;--card:#ffffff;--fg:#2b2620;--sub:#6b6156;--line:#f0e3cc;
+ --c8:#f4a340;--c9:#5bb36a;--c10:#7a8cf0;--btnfg:#ffffff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1d1a16;--card:#27231e;--fg:#f3ece2;--sub:#bdb2a3;--line:#3a332a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;word-break:keep-all;overflow-wrap:anywhere}
+main{max-width:640px;margin:0 auto;padding:24px 16px 56px}
+.hero{text-align:center;margin:4px 0 18px}
+.hero h1{font-size:27px;line-height:1.3;margin:0 0 6px}
+.hero p{margin:0;color:var(--sub);font-size:15px}
+.flyer{display:block;width:100%;border-radius:18px;border:1px solid var(--line);margin:0 0 22px;background:var(--card)}
+.pdf{display:block;text-align:center;margin:0 0 22px;color:var(--fg);font-weight:600}
+h2.sec{font-size:19px;margin:6px 0 12px}
+.center{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 0 14px}
+.center .info{flex:1;min-width:0}
+.center h3{margin:0 0 2px;font-size:19px}
+.center .addr{margin:0;color:var(--sub);font-size:15px}
+.apply{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--fg);font-weight:700;font-size:14px;width:96px}
+.apply .ico{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;color:var(--btnfg);box-shadow:0 4px 0 rgba(0,0,0,.12)}
+.apply svg{width:38px;height:38px}
+.c8 .ico{background:var(--c8)} .c9 .ico{background:var(--c9)} .c10 .ico{background:var(--c10)}
+.note{color:var(--sub);font-size:14px;margin:16px 0 0;text-align:center}
+"""
+ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+        'stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"/><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"/>'
+        '<path d="M15 10V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.6 14a1.5 1.5 0 0 1 2.5-1.7L9 15"/></svg>')
+
+
+def main_flyers():
+    fs = sorted(glob.glob(os.path.join(ROOT, 'flyers', 'main*.*')))
+    out = []
+    for f in fs:
+        r = os.path.relpath(f, ROOT).replace('\\', '/')
+        out.append(f'<a class="pdf" href="{esc(r)}">홍보 전단지 열기 (PDF)</a>' if r.lower().endswith('.pdf')
+                   else f'<img class="flyer" src="{esc(r)}" alt="영종 다함께 돌봄센터 홍보 전단지">')
+    return ''.join(out)
+
+
+centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}</p></div>
+<a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
+land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1><p>전단지를 보시고, 다닐 센터의 「신청하고 싶어요」를 눌러 주세요.</p></div>
+{main_flyers()}
+<h2 class="sec">센터 위치</h2>
+{centers_html}
+<p class="note">누르면 구글 신청서가 열리고, 고르신 센터가 미리 체크되어 있습니다. 나머지 칸을 채우고 「제출」을 눌러 주세요.</p>"""
+open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
+    f"""<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>영종 다함께 돌봄센터 신청</title><style>{LAND_CSS}</style></head><body><main>{land}</main></body></html>""")
 
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
