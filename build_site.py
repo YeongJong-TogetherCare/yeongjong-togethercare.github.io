@@ -17,7 +17,7 @@ CENTERS = [  # name = exact option text in the form; address from the form descr
     ('9', '다함께 돌봄센터 9호점', '영종대로565번길 20, 커뮤니티센터 지상 1층'),
     ('10', '다함께 돌봄센터 10호점', '은하수로 412, 커뮤니티센터 지하 1층'),
 ]
-CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-10 판)
+CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-10 343x479 판)
 PHONE = {'8': '032) 752-1412', '9': '032) 752-2412', '10': '032) 751-3412'}  # from the flyer (2026-11-10 판)
 def tel(n):
     return '<a href="tel:' + PHONE[n].replace(') ', '-').replace(')', '-') + '">☎ ' + esc(PHONE[n]) + '</a>'
@@ -128,12 +128,12 @@ def main_flyers():
     return ''.join(out)
 
 
-# readable text version of the poster table (the poster image the centre supplied is only 398x540 px,
+# readable text version of the poster table (the poster image the centre supplied is only 343x479 px,
 # so its table text is blurry on phones). Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
     ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동', '(만 6세이나 입학 전 아동 포함)']),
     ('접수 방법', ['2026.11.12일부터 10시부터 전화 및 방문접수 (평일 10시 ~ 18시)']),
-    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '선발기준: 정원의 10%는 단지내 아동으로 우선 배정합니다.', '정원 마감 전까지 선착순 접수 마감합니다.']),
+    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '선발기준: 정원의 70%는 단지내 아동으로 우선 배정합니다.', '정원 마감 전까지 선착순 접수 마감합니다.']),
     ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
     ('이용 시간', ['학기 중: 13시 ~ 20시', '방학 중: 09시 ~ 18시', '(주말 공휴일 제외)']),
     ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
