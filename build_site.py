@@ -17,7 +17,10 @@ CENTERS = [  # name = exact option text in the form; address from the form descr
     ('9', '다함께 돌봄센터 9호점', '영종대로565번길 20, 커뮤니티센터 지상 1층'),
     ('10', '다함께 돌봄센터 10호점', '은하수로 412, 커뮤니티센터 지하 1층'),
 ]
-CAPACITY = {'8': '정원 20명 내외', '9': '정원 35명 내외', '10': '정원 20명 내외'}  # from the flyer (flyers/main.jpg)
+CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-10 판)
+PHONE = {'8': '032) 752-1412', '9': '032) 752-2412', '10': '032) 751-3412'}  # from the flyer (2026-11-10 판)
+def tel(n):
+    return '<a href="tel:' + PHONE[n].replace(') ', '-').replace(')', '-') + '">☎ ' + esc(PHONE[n]) + '</a>'
 esc = html.escape
 
 
@@ -78,7 +81,7 @@ for n, name, addr in CENTERS:
 <p class="sub">홍보지를 보시고 아래 단추로 신청서를 작성해 주세요.</p>
 <section class="card">
 {flyer_html(n, name)}
-<p class="addr">위치: {esc(addr)}</p>
+<p class="addr">위치: {esc(addr)} ({esc(CAPACITY[n])})<br>{tel(n)}</p>
 <a class="btn" href="{esc(form_url(name))}">{esc(n)}호점 신청하기</a>
 </section>
 <a class="link" href="{LINKTREE}">다른 호점 보기</a>
@@ -103,6 +106,7 @@ h2.sec{font-size:19px;margin:6px 0 12px}
 .center .info{flex:1;min-width:0}
 .center h3{margin:0 0 2px;font-size:19px}
 .center .addr{margin:0;color:var(--sub);font-size:15px}
+.addr a{color:var(--fg);font-weight:600;text-decoration:none}
 .apply{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;color:var(--fg);font-weight:700;font-size:14px;width:96px}
 .apply .ico{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;color:var(--btnfg);box-shadow:0 4px 0 rgba(0,0,0,.12)}
 .apply svg{width:38px;height:38px}
@@ -127,12 +131,12 @@ def main_flyers():
 # readable text version of the poster table (the poster image the centre supplied is only 398x540 px,
 # so its table text is blurry on phones). Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
-    ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동 (만 6세이나 입학 전 아동 포함)', '정원 초과 시 우선순위에 따라 선발']),
-    ('접수 방법', ['2026.11.12일부터 9시부터 전화 및 방문접수 (평일 10시 ~ 18시)', '별도의 차량운행을 하지 않습니다.']),
-    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '정원 마감 전까지 선착순 접수 마감합니다.']),
-    ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 1일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
-    ('이용 시간', ['학기 중: 13시 ~ 20시 (주말 공휴일 제외)', '방학 중: 09시 ~ 18시 (주말 공휴일 제외)']),
-    ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동 프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
+    ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동', '(만 6세이나 입학 전 아동 포함)']),
+    ('접수 방법', ['2026.11.12일부터 10시부터 전화 및 방문접수 (평일 10시 ~ 18시)']),
+    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '선발기준: 정원의 10%는 단지내 아동으로 우선 배정합니다.', '정원 마감 전까지 선착순 접수 마감합니다.']),
+    ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
+    ('이용 시간', ['학기 중: 13시 ~ 20시', '방학 중: 09시 ~ 18시', '(주말 공휴일 제외)']),
+    ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
 ]
 info_html = '<div class="infobox">' + ''.join(
     f'<div class="row"><div class="k">{esc(k)}</div><div class="v">' + ''.join(f'<p>{esc(x)}</p>' for x in vs) + '</div></div>'
@@ -146,7 +150,7 @@ LAND_CSS += """
 .infobox .v p{margin:0}
 """
 
-centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}</p></div>
+centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}<br>{tel(n)}</p></div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
 land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1></div>
 {main_flyers()}
