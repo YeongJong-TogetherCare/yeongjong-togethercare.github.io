@@ -71,16 +71,23 @@ function zoomAt(px,py,k){
   var ns=Math.min(maxS,Math.max(1,s*k));k=ns/s;
   tx=px-(px-tx)*k;ty=py-(py-ty)*k;s=ns;apply();
 }
-function show(src){
+var hiDone={};
+function show(src,small){
   open=true;zv.classList.add('on');document.body.style.overflow='hidden';
-  if(im.getAttribute('src')!==src){im.onload=fit;im.src=src;} else fit();
+  if(hiDone[src]){if(im.getAttribute('src')!==src){im.onload=fit;im.src=src;}else fit();}
+  else{
+    // show the already-loaded page copy at once, swap in the sharp copy when it arrives (same aspect ratio)
+    im.onload=function(){im.onload=null;fit();};im.src=small;
+    var h=new Image();h.onload=function(){hiDone[src]=1;im.src=src;
+      maxS=Math.max(3,h.naturalWidth/(bw*(window.devicePixelRatio||1))*2);};h.src=src;
+  }
   try{history.pushState({zv:1},'')}catch(e){}
 }
 function hide(fromPop){
   if(!open)return;open=false;zv.classList.remove('on');document.body.style.overflow='';pts={};pinch=null;drag=null;
   if(!fromPop){try{if(history.state&&history.state.zv)history.back()}catch(e){}}
 }
-document.querySelectorAll('.flyerbtn').forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-zoom'))})});
+document.querySelectorAll('.flyerbtn').forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-zoom'),b.querySelector('img').currentSrc||b.querySelector('img').src)})});
 zv.querySelector('.close').addEventListener('click',function(){hide(false)});
 zv.querySelector('.in').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1.6)});
 zv.querySelector('.out').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1/1.6)});
