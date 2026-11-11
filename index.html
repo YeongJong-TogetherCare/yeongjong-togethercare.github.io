@@ -30,8 +30,18 @@ h2.sec{font-size:19px;margin:6px 0 12px}
 .infobox .k{flex:none;width:72px;font-weight:700;font-size:15px}
 .infobox .v{flex:1;min-width:0;font-size:15px}
 .infobox .v p{margin:0}
+
+.flyerbtn{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;margin:0 0 6px}
+.flyerbtn .flyer{margin:0}
+.zoomhint{text-align:center;color:var(--sub);font-size:14px;margin:0 0 22px}
+#zv{position:fixed;inset:0;z-index:50;background:#000;display:none;touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none}
+#zv.on{display:block}
+#zv img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;-webkit-user-drag:none}
+#zv .bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+#zv button{font:700 17px/1 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:#fff;background:#000;border:2px solid #fff;border-radius:999px;min-width:56px;height:48px;padding:0 18px}
+#zv .close{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px}
 </style></head><body><main><div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1></div>
-<img class="flyer" src="flyers/main.png" alt="영종 다함께 돌봄센터 홍보 전단지">
+<button type="button" class="flyerbtn" data-zoom="flyers/zoom/main.png" aria-label="홍보 전단지 크게 보기"><img class="flyer" src="flyers/main.png" alt="영종 다함께 돌봄센터 홍보 전단지"></button><p class="zoomhint">포스터를 누르면 크게 볼 수 있어요</p>
 <h2 class="sec">모집 안내</h2>
 <div class="infobox"><div class="row"><div class="k">모집 대상</div><div class="v"><p>돌봄이 필요한 만 6세 ~ 12세 아동</p><p>(만 6세이나 입학 전 아동 포함)</p></div></div><div class="row"><div class="k">접수 방법</div><div class="v"><p>2026.11.12일부터 10시부터 전화 및 방문접수 (평일 10시 ~ 18시)</p></div></div><div class="row"><div class="k">우선 순위</div><div class="v"><p>맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정</p><p>선발기준: 정원의 70%는 단지내 아동으로 우선 배정합니다.</p><p>정원 마감 전까지 선착순 접수 마감합니다.</p></div></div><div class="row"><div class="k">이용 요금</div><div class="v"><p>정기돌봄 월 70,000원 / 일시돌봄 일 5,000원</p><p>(간식비 포함) / 방학기간 중식 무상 지원</p></div></div><div class="row"><div class="k">이용 시간</div><div class="v"><p>학기 중: 13시 ~ 20시</p><p>방학 중: 09시 ~ 18시</p><p>(주말 공휴일 제외)</p></div></div><div class="row"><div class="k">프로그램</div><div class="v"><p>기본프로그램: 출결확인, 일상생활 지도, 간식제공</p><p>활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램</p></div></div></div>
 <h2 class="sec">센터 위치</h2>
@@ -39,4 +49,76 @@ h2.sec{font-size:19px;margin:6px 0 12px}
 <a class="apply c8" href="https://forms.gle/E5fAy72eKyufHbdG8"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"/><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"/><path d="M15 10V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.6 14a1.5 1.5 0 0 1 2.5-1.7L9 15"/></svg></span>신청하고 싶어요</a></div><div class="center"><div class="info"><h3>9호점</h3><p class="addr">영종대로565번길 20, 커뮤니티센터 지상 1층<br>정원 35명<br><a href="tel:032-752-2412">☎ 032) 752-2412</a></p></div>
 <a class="apply c9" href="https://forms.gle/rEWt49MLSrKaP9ddA"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"/><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"/><path d="M15 10V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.6 14a1.5 1.5 0 0 1 2.5-1.7L9 15"/></svg></span>신청하고 싶어요</a></div><div class="center"><div class="info"><h3>10호점</h3><p class="addr">은하수로 412, 커뮤니티센터 지하 1층<br>정원 20명<br><a href="tel:032-751-3412">☎ 032) 751-3412</a></p></div>
 <a class="apply c10" href="https://forms.gle/4vLJVJH1ge7mgqMZ7"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"/><path d="M12 10V4.5a1.5 1.5 0 0 1 3 0V10"/><path d="M15 10V6.5a1.5 1.5 0 0 1 3 0V14a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L3.6 14a1.5 1.5 0 0 1 2.5-1.7L9 15"/></svg></span>신청하고 싶어요</a></div>
-<p class="note">누르면 그 호점의 구글 신청서가 열립니다. 칸을 채우고 「제출」을 눌러 주세요.</p></main></body></html>
+<p class="note">누르면 그 호점의 구글 신청서가 열립니다. 칸을 채우고 「제출」을 눌러 주세요.</p></main><div id="zv" role="dialog" aria-modal="true" aria-label="홍보 전단지 크게 보기"><img alt="영종 다함께 돌봄센터 홍보 전단지 (크게)">
+<button type="button" class="close">닫기</button>
+<div class="bar"><button type="button" class="out" aria-label="작게">－</button><button type="button" class="fit">전체</button><button type="button" class="in" aria-label="크게">＋</button></div></div><script>
+(function(){
+var zv=document.getElementById('zv'),im=zv.querySelector('img');
+var s=1,tx=0,ty=0,bw=0,bh=0,maxS=6,pts={},pinch=null,drag=null,lastTap=0,open=false;
+function vw(){return zv.clientWidth} function vh(){return zv.clientHeight}
+function apply(){
+  var W=bw*s,H=bh*s;
+  if(W<=vw()) tx=(vw()-W)/2; else tx=Math.min(0,Math.max(vw()-W,tx));
+  if(H<=vh()) ty=(vh()-H)/2; else ty=Math.min(0,Math.max(vh()-H,ty));
+  im.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
+}
+function fit(){
+  var nw=im.naturalWidth||1,nh=im.naturalHeight||1,k=Math.min(vw()/nw,vh()/nh);
+  bw=nw*k;bh=nh*k;im.style.width=bw+'px';im.style.height=bh+'px';
+  maxS=Math.max(3,nw/(bw*(window.devicePixelRatio||1))*2);s=1;tx=0;ty=0;apply();
+}
+function zoomAt(px,py,k){
+  var ns=Math.min(maxS,Math.max(1,s*k));k=ns/s;
+  tx=px-(px-tx)*k;ty=py-(py-ty)*k;s=ns;apply();
+}
+function show(src){
+  open=true;zv.classList.add('on');document.body.style.overflow='hidden';
+  if(im.getAttribute('src')!==src){im.onload=fit;im.src=src;} else fit();
+  try{history.pushState({zv:1},'')}catch(e){}
+}
+function hide(fromPop){
+  if(!open)return;open=false;zv.classList.remove('on');document.body.style.overflow='';pts={};pinch=null;drag=null;
+  if(!fromPop){try{if(history.state&&history.state.zv)history.back()}catch(e){}}
+}
+document.querySelectorAll('.flyerbtn').forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-zoom'))})});
+zv.querySelector('.close').addEventListener('click',function(){hide(false)});
+zv.querySelector('.in').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1.6)});
+zv.querySelector('.out').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1/1.6)});
+zv.querySelector('.fit').addEventListener('click',fit);
+window.addEventListener('popstate',function(){hide(true)});
+window.addEventListener('resize',function(){if(open)fit()});
+document.addEventListener('keydown',function(e){if(open&&e.key==='Escape')hide(false)});
+zv.addEventListener('wheel',function(e){e.preventDefault();var r=zv.getBoundingClientRect();zoomAt(e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.15:1/1.15)},{passive:false});
+function onBar(e){return e.target.closest('button')}
+zv.addEventListener('pointerdown',function(e){
+  if(onBar(e))return;zv.setPointerCapture(e.pointerId);pts[e.pointerId]={x:e.clientX,y:e.clientY};
+  var ids=Object.keys(pts);
+  if(ids.length===2){var a=pts[ids[0]],b=pts[ids[1]];pinch={d:Math.hypot(a.x-b.x,a.y-b.y),s:s};drag=null;}
+  else if(ids.length===1){drag={x:e.clientX,y:e.clientY,tx:tx,ty:ty,moved:false};}
+});
+zv.addEventListener('pointermove',function(e){
+  if(!pts[e.pointerId])return;pts[e.pointerId]={x:e.clientX,y:e.clientY};
+  var ids=Object.keys(pts),r=zv.getBoundingClientRect();
+  if(pinch&&ids.length>=2){
+    var a=pts[ids[0]],b=pts[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y);
+    zoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,(pinch.s*d/pinch.d)/s);
+  }else if(drag){
+    var dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>6)drag.moved=true;
+    tx=drag.tx+dx;ty=drag.ty+dy;apply();
+  }
+});
+function up(e){
+  if(!pts[e.pointerId])return;delete pts[e.pointerId];
+  var ids=Object.keys(pts);
+  if(ids.length<2)pinch=null;
+  if(ids.length===1){var p=pts[ids[0]];drag={x:p.x,y:p.y,tx:tx,ty:ty,moved:true};return;}
+  if(ids.length===0&&drag&&!drag.moved&&e.type==='pointerup'){
+    var now=Date.now(),r=zv.getBoundingClientRect();
+    if(now-lastTap<320){lastTap=0;if(s>1.05)fit();else zoomAt(e.clientX-r.left,e.clientY-r.top,3);}
+    else lastTap=now;
+  }
+  if(ids.length===0)drag=null;
+}
+zv.addEventListener('pointerup',up);zv.addEventListener('pointercancel',up);
+})();
+</script></body></html>

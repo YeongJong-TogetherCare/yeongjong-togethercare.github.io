@@ -119,17 +119,114 @@ ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width
 
 
 def main_flyers():
+    """Poster on the landing page. flyers/main.png is the on-page copy (1240 px wide);
+    flyers/zoom/main.png (2480 px, rendered from flyers/원본/*-현재판.hwpx) opens in the zoom viewer."""
     fs = sorted(glob.glob(os.path.join(ROOT, 'flyers', 'main*.*')))
     out = []
     for f in fs:
         r = os.path.relpath(f, ROOT).replace('\\', '/')
-        out.append(f'<a class="pdf" href="{esc(r)}">홍보 전단지 열기 (PDF)</a>' if r.lower().endswith('.pdf')
-                   else f'<img class="flyer" src="{esc(r)}" alt="영종 다함께 돌봄센터 홍보 전단지">')
+        if r.lower().endswith('.pdf'):
+            out.append(f'<a class="pdf" href="{esc(r)}">홍보 전단지 열기 (PDF)</a>')
+            continue
+        big = os.path.join(ROOT, 'flyers', 'zoom', os.path.basename(f))
+        zr = os.path.relpath(big, ROOT).replace('\\', '/') if os.path.exists(big) else r
+        out.append(f'<button type="button" class="flyerbtn" data-zoom="{esc(zr)}" aria-label="홍보 전단지 크게 보기">'
+                   f'<img class="flyer" src="{esc(r)}" alt="영종 다함께 돌봄센터 홍보 전단지"></button>'
+                   '<p class="zoomhint">포스터를 누르면 크게 볼 수 있어요</p>')
     return ''.join(out)
 
 
-# readable text version of the poster table (the poster image the centre supplied is only 343x479 px,
-# so its table text is blurry on phones). Wording copied from the poster; do not edit content here.
+# ---- zoom viewer: black full screen, pinch / double tap / wheel / +- buttons, back button closes ----
+ZOOM_CSS = """
+.flyerbtn{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;margin:0 0 6px}
+.flyerbtn .flyer{margin:0}
+.zoomhint{text-align:center;color:var(--sub);font-size:14px;margin:0 0 22px}
+#zv{position:fixed;inset:0;z-index:50;background:#000;display:none;touch-action:none;overflow:hidden;user-select:none;-webkit-user-select:none}
+#zv.on{display:block}
+#zv img{position:absolute;left:0;top:0;transform-origin:0 0;max-width:none;-webkit-user-drag:none}
+#zv .bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+#zv button{font:700 17px/1 "Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:#fff;background:#000;border:2px solid #fff;border-radius:999px;min-width:56px;height:48px;padding:0 18px}
+#zv .close{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px}
+"""
+ZOOM_HTML = """<div id="zv" role="dialog" aria-modal="true" aria-label="홍보 전단지 크게 보기"><img alt="영종 다함께 돌봄센터 홍보 전단지 (크게)">
+<button type="button" class="close">닫기</button>
+<div class="bar"><button type="button" class="out" aria-label="작게">－</button><button type="button" class="fit">전체</button><button type="button" class="in" aria-label="크게">＋</button></div></div>"""
+ZOOM_JS = r"""<script>
+(function(){
+var zv=document.getElementById('zv'),im=zv.querySelector('img');
+var s=1,tx=0,ty=0,bw=0,bh=0,maxS=6,pts={},pinch=null,drag=null,lastTap=0,open=false;
+function vw(){return zv.clientWidth} function vh(){return zv.clientHeight}
+function apply(){
+  var W=bw*s,H=bh*s;
+  if(W<=vw()) tx=(vw()-W)/2; else tx=Math.min(0,Math.max(vw()-W,tx));
+  if(H<=vh()) ty=(vh()-H)/2; else ty=Math.min(0,Math.max(vh()-H,ty));
+  im.style.transform='translate('+tx+'px,'+ty+'px) scale('+s+')';
+}
+function fit(){
+  var nw=im.naturalWidth||1,nh=im.naturalHeight||1,k=Math.min(vw()/nw,vh()/nh);
+  bw=nw*k;bh=nh*k;im.style.width=bw+'px';im.style.height=bh+'px';
+  maxS=Math.max(3,nw/(bw*(window.devicePixelRatio||1))*2);s=1;tx=0;ty=0;apply();
+}
+function zoomAt(px,py,k){
+  var ns=Math.min(maxS,Math.max(1,s*k));k=ns/s;
+  tx=px-(px-tx)*k;ty=py-(py-ty)*k;s=ns;apply();
+}
+function show(src){
+  open=true;zv.classList.add('on');document.body.style.overflow='hidden';
+  if(im.getAttribute('src')!==src){im.onload=fit;im.src=src;} else fit();
+  try{history.pushState({zv:1},'')}catch(e){}
+}
+function hide(fromPop){
+  if(!open)return;open=false;zv.classList.remove('on');document.body.style.overflow='';pts={};pinch=null;drag=null;
+  if(!fromPop){try{if(history.state&&history.state.zv)history.back()}catch(e){}}
+}
+document.querySelectorAll('.flyerbtn').forEach(function(b){b.addEventListener('click',function(){show(b.getAttribute('data-zoom'))})});
+zv.querySelector('.close').addEventListener('click',function(){hide(false)});
+zv.querySelector('.in').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1.6)});
+zv.querySelector('.out').addEventListener('click',function(){zoomAt(vw()/2,vh()/2,1/1.6)});
+zv.querySelector('.fit').addEventListener('click',fit);
+window.addEventListener('popstate',function(){hide(true)});
+window.addEventListener('resize',function(){if(open)fit()});
+document.addEventListener('keydown',function(e){if(open&&e.key==='Escape')hide(false)});
+zv.addEventListener('wheel',function(e){e.preventDefault();var r=zv.getBoundingClientRect();zoomAt(e.clientX-r.left,e.clientY-r.top,e.deltaY<0?1.15:1/1.15)},{passive:false});
+function onBar(e){return e.target.closest('button')}
+zv.addEventListener('pointerdown',function(e){
+  if(onBar(e))return;zv.setPointerCapture(e.pointerId);pts[e.pointerId]={x:e.clientX,y:e.clientY};
+  var ids=Object.keys(pts);
+  if(ids.length===2){var a=pts[ids[0]],b=pts[ids[1]];pinch={d:Math.hypot(a.x-b.x,a.y-b.y),s:s};drag=null;}
+  else if(ids.length===1){drag={x:e.clientX,y:e.clientY,tx:tx,ty:ty,moved:false};}
+});
+zv.addEventListener('pointermove',function(e){
+  if(!pts[e.pointerId])return;pts[e.pointerId]={x:e.clientX,y:e.clientY};
+  var ids=Object.keys(pts),r=zv.getBoundingClientRect();
+  if(pinch&&ids.length>=2){
+    var a=pts[ids[0]],b=pts[ids[1]],d=Math.hypot(a.x-b.x,a.y-b.y);
+    zoomAt((a.x+b.x)/2-r.left,(a.y+b.y)/2-r.top,(pinch.s*d/pinch.d)/s);
+  }else if(drag){
+    var dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>6)drag.moved=true;
+    tx=drag.tx+dx;ty=drag.ty+dy;apply();
+  }
+});
+function up(e){
+  if(!pts[e.pointerId])return;delete pts[e.pointerId];
+  var ids=Object.keys(pts);
+  if(ids.length<2)pinch=null;
+  if(ids.length===1){var p=pts[ids[0]];drag={x:p.x,y:p.y,tx:tx,ty:ty,moved:true};return;}
+  if(ids.length===0&&drag&&!drag.moved&&e.type==='pointerup'){
+    var now=Date.now(),r=zv.getBoundingClientRect();
+    if(now-lastTap<320){lastTap=0;if(s>1.05)fit();else zoomAt(e.clientX-r.left,e.clientY-r.top,3);}
+    else lastTap=now;
+  }
+  if(ids.length===0)drag=null;
+}
+zv.addEventListener('pointerup',up);zv.addEventListener('pointercancel',up);
+})();
+</script>"""
+
+
+# readable text version of the poster table. The poster image the centre supplied is only 343x479 px;
+# since 2026-11-11 the site shows a sharp re-render of the same hwpx instead (flyers/zoom/main.png),
+# but keep this text list too. Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
     ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동', '(만 6세이나 입학 전 아동 포함)']),
     ('접수 방법', ['2026.11.12일부터 10시부터 전화 및 방문접수 (평일 10시 ~ 18시)']),
@@ -162,7 +259,7 @@ land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청<
 open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
     f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>영종 다함께 돌봄센터 신청</title><style>{LAND_CSS}</style></head><body><main>{land}</main></body></html>""")
+<title>영종 다함께 돌봄센터 신청</title><style>{LAND_CSS}{ZOOM_CSS}</style></head><body><main>{land}</main>{ZOOM_HTML}{ZOOM_JS}</body></html>""")
 
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
