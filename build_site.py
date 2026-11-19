@@ -316,7 +316,7 @@ land = f"""<div class="hero"><h1>영종구 다함께돌봄센터</h1></div>
 open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
     f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>영종구 다함께돌봄센터 신청</title><style>{LAND_CSS}{ZOOM_CSS}</style></head><body><main>{land}</main>{ZOOM_HTML}{ZOOM_JS}</body></html>""")
+<title>영종구 다함께돌봄센터</title><style>{LAND_CSS}{ZOOM_CSS}</style></head><body><main>{land}</main>{ZOOM_HTML}{ZOOM_JS}</body></html>""")
 
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
