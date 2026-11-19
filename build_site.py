@@ -260,33 +260,53 @@ LAND_CSS += """
 .infobox .v p{margin:0}
 """
 
-# selection-criteria.hwpx = 이용아동선정기준표.hwp saved as HWPX by Hangul COM 2026-11-20 (page render pixel-identical to the hwp).
-# forms/hwp-icon.png = Hangul document icon (Hwp.exe icon index 1, the .hwp/.hwpx DefaultIcon), trimmed to 98x112.
-# application documents the user supplied 2026-11-19 (original files, unchanged; 신청서류 replaced 23:47 판, order = 포스터 > 점수표 > 신청서류). ASCII paths; download= keeps the Korean name.
-DOCS = [
-    ('forms/selection-criteria.hwpx', '이용아동선정기준표.hwpx', '이용아동 선정기준표', '한글(hwpx)'),
-    ('forms/application-docs.hwpx', '영종다함께돌봄센터 신청서류.hwpx', '신청서류 안내', '한글(hwpx)'),
+# ---- documents shown as pictures like the poster (user 2026-11-20: 한글 파일 대신 이미지로) ----
+# flyers/score.png, flyers/documents.png = page copies (1240 px); flyers/zoom/*.png = 300 dpi renders by Hangul COM
+# (CreatePageImage) of 이용아동선정기준표.hwp and 영종다함께돌봄센터 신청서류.hwpx (both on the user's desktop 2026-11-19).
+# Order (user): 포스터 > 점수 확인(선정기준표) > 입소 서류 확인(신청서류 안내).
+DOC_IMAGES = [
+    ('score.png', '1. 점수 확인', '이용아동 선정기준표', '항목별 점수를 더해 총점을 확인해 보세요. 총점이 높은 순으로 선정합니다.'),
+    ('documents.png', '2. 입소 서류 확인', '신청서류 안내', '필요한 서류를 확인하고, 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.'),
 ]
-docs_html = ('<div class="docs">' + ''.join(
-    f'<a class="doc" href="{esc(p)}" download="{esc(fn)}"><img class="di" src="forms/hwp-icon.png" alt="한글 파일" width="35" height="40">'
-    f'<span class="dn">{esc(label)}</span><span class="dt">{esc(kind)} 내려받기</span></a>'
-    for p, fn, label, kind in DOCS) +
-    '<p class="dnote">내려받아 작성하신 뒤, 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.<br>'
-    '한글 파일은 컴퓨터의 한글 프로그램이나 휴대폰의 「한컴오피스 Viewer」 앱으로 열 수 있어요.</p></div>')
+docs_html = ''.join(
+    f'<div class="docimg"><h3>{esc(step)} <span>{esc(title)}</span></h3><p class="dnote">{esc(note)}</p>'
+    f'<button type="button" class="flyerbtn" data-zoom="flyers/zoom/{esc(f)}" aria-label="{esc(title)} 크게 보기">'
+    f'<img class="flyer" src="flyers/{esc(f)}" alt="{esc(title)}" loading="lazy"></button>'
+    '<p class="zoomhint">그림을 누르면 크게 볼 수 있어요</p></div>'
+    for f, step, title, note in DOC_IMAGES)
 LAND_CSS += """
-.docs{margin:0 0 22px}
-.doc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 10px;color:var(--fg);text-decoration:none}
-.doc .di{flex:none;width:35px;height:40px}
-.doc .dn{flex:1;min-width:0;font-weight:700}
-.doc .dt{flex:none;font-size:14px;font-weight:600;color:var(--sub)}
-.dnote{color:var(--sub);font-size:14px;margin:4px 0 0}
+.docimg h3{font-size:17px;margin:0 0 2px}
+.docimg h3 span{font-weight:600;color:var(--sub)}
+.dnote{color:var(--sub);font-size:14px;margin:0 0 10px}
 """
 
-centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3><p class="addr">{esc(addr)}<br>{esc(CAPACITY[n])}<br>{tel(n)}</p></div>
+# center card: one label/value row per line so the lines line up in every card; address split into road / building
+LAND_CSS += """
+.hero h1{white-space:nowrap;font-size:clamp(18px,6.2vw,27px)}
+.center{gap:10px}
+.center .rows{display:grid;grid-template-columns:auto 1fr;column-gap:8px;row-gap:2px;margin:4px 0 0;font-size:clamp(13px,3.9vw,15px);line-height:1.5}
+.center .rows dt{color:var(--sub);font-weight:600}
+.center .rows dd{margin:0;white-space:nowrap;color:var(--sub)}
+.center .rows dd a{color:var(--fg);font-weight:600;text-decoration:none}
+.apply{width:auto;min-width:84px;white-space:nowrap;text-align:center;font-size:13px}
+"""
+
+
+def center_rows(n, addr):
+    road, _, bld = addr.partition(', ')
+    phone = PHONE[n]
+    rows = [('주소', esc(road) + '<br>' + esc(bld)), ('정원', esc(CAPACITY[n].replace('정원 ', ''))),
+            ('전화', f'<a href="tel:{esc(phone)}">{esc(phone)}</a>')]
+    if n in EMAIL:
+        rows.append(('메일', f'<a href="mailto:{esc(EMAIL[n])}">{esc(EMAIL[n])}</a>'))
+    return '<dl class="rows">' + ''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k, v in rows) + '</dl>'
+
+
+centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3>{center_rows(n, addr)}</div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
-land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1></div>
+land = f"""<div class="hero"><h1>영종 다함께 돌봄센터 돌봄 신청</h1></div>
 {main_flyers()}
-<h2 class="sec">신청 서류 내려받기</h2>
+<h2 class="sec">서류 확인</h2>
 {docs_html}
 <h2 class="sec">모집 안내</h2>
 {info_html}
