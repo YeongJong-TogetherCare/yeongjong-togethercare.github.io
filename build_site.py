@@ -304,7 +304,7 @@ def center_rows(n, addr):
 
 centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3>{center_rows(n, addr)}</div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
-land = f"""<div class="hero"><h1>영종구 다함께 돌봄센터</h1></div>
+land = f"""<div class="hero"><h1>영종구 다함께돌봄센터</h1></div>
 {main_flyers()}
 <h2 class="sec">서류 확인</h2>
 {docs_html}
@@ -316,7 +316,7 @@ land = f"""<div class="hero"><h1>영종구 다함께 돌봄센터</h1></div>
 open(os.path.join(ROOT, 'index.html'), 'w', encoding='utf-8').write(
     f"""<!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>영종구 다함께 돌봄센터 신청</title><style>{LAND_CSS}{ZOOM_CSS}</style></head><body><main>{land}</main>{ZOOM_HTML}{ZOOM_JS}</body></html>""")
+<title>영종구 다함께돌봄센터 신청</title><style>{LAND_CSS}{ZOOM_CSS}</style></head><body><main>{land}</main>{ZOOM_HTML}{ZOOM_JS}</body></html>""")
 
 # ---- QR codes (print size 1200 px, label under the code) ----
 os.makedirs(os.path.join(ROOT, 'qr'), exist_ok=True)
