@@ -260,20 +260,23 @@ LAND_CSS += """
 .infobox .v p{margin:0}
 """
 
+# forms/hwp-icon.png = Hangul document icon (Hwp.exe icon index 1, the .hwp/.hwpx DefaultIcon), trimmed to 98x112.
 # application documents the user supplied 2026-11-19 (original files, unchanged). ASCII paths; download= keeps the Korean name.
 DOCS = [
     ('forms/selection-criteria.hwp', '서식 이용아동선정기준표.hwp', '이용아동 선정기준표', '한글(hwp)'),
     ('forms/application-guide.hwpx', '영종다함께돌봄센터 신청서류 안내.hwpx', '신청서류 안내', '한글(hwpx)'),
 ]
 docs_html = ('<div class="docs">' + ''.join(
-    f'<a class="doc" href="{esc(p)}" download="{esc(fn)}"><span class="dn">{esc(label)}</span><span class="dt">{esc(kind)} 내려받기</span></a>'
+    f'<a class="doc" href="{esc(p)}" download="{esc(fn)}"><img class="di" src="forms/hwp-icon.png" alt="한글 파일" width="35" height="40">'
+    f'<span class="dn">{esc(label)}</span><span class="dt">{esc(kind)} 내려받기</span></a>'
     for p, fn, label, kind in DOCS) +
     '<p class="dnote">내려받아 작성하신 뒤, 위 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.<br>'
     '한글 파일은 컴퓨터의 한글 프로그램이나 휴대폰의 「한컴오피스 Viewer」 앱으로 열 수 있어요.</p></div>')
 LAND_CSS += """
 .docs{margin:0 0 22px}
 .doc{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:0 0 10px;color:var(--fg);text-decoration:none}
-.doc .dn{font-weight:700}
+.doc .di{flex:none;width:35px;height:40px}
+.doc .dn{flex:1;min-width:0;font-weight:700}
 .doc .dt{flex:none;font-size:14px;font-weight:600;color:var(--sub)}
 .dnote{color:var(--sub);font-size:14px;margin:4px 0 0}
 """
