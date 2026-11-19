@@ -17,18 +17,22 @@ CENTERS = [  # name = exact option text in the form; address from the form descr
     ('9', '다함께 돌봄센터 9호점', '영종대로565번길 20, 커뮤니티센터 지상 1층'),
     ('10', '다함께 돌봄센터 10호점', '은하수로 412, 커뮤니티센터 지하 1층'),
 ]
-CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-10 343x479 판)
-PHONE = {'8': '032) 752-1412', '9': '032) 752-2412', '10': '032) 751-3412'}  # from the flyer (2026-11-10 판)
+CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-19 1055x1491 판)
+PHONE = {'8': '032-713-4491', '9': '032-713-4492', '10': '032-713-4493'}  # from the flyer (2026-11-19 판)
+EMAIL = {'8': 'wow0735@gmail.com', '9': 'kaku837@gmail.com', '10': 'yjdd100@gmail.com'}  # given by the user 2026-11-19
 def tel(n):
-    return '<a href="tel:' + PHONE[n].replace(') ', '-').replace(')', '-') + '">☎ ' + esc(PHONE[n]) + '</a>'
+    out = '<a href="tel:' + PHONE[n].replace(') ', '-').replace(')', '-') + '">☎ ' + esc(PHONE[n]) + '</a>'
+    if n in EMAIL:
+        out += '<br><a href="mailto:' + esc(EMAIL[n]) + '">✉ ' + esc(EMAIL[n]) + '</a>'
+    return out
 esc = html.escape
 
 
-# one Google Form per center (given by the user 2026-11-08 22:45); each form has no center question
+# one Google Form per center (given by the user 2026-11-08 22:45, replaced 2026-11-19); each form has no center question
 CENTER_FORMS = {
-    '다함께 돌봄센터 8호점': 'https://forms.gle/E5fAy72eKyufHbdG8',
-    '다함께 돌봄센터 9호점': 'https://forms.gle/rEWt49MLSrKaP9ddA',
-    '다함께 돌봄센터 10호점': 'https://forms.gle/4vLJVJH1ge7mgqMZ7',
+    '다함께 돌봄센터 8호점': 'https://forms.gle/8TzuqprSrnAP6JqP9',
+    '다함께 돌봄센터 9호점': 'https://forms.gle/MnfP18Pq2U9TugH49',
+    '다함께 돌봄센터 10호점': 'https://forms.gle/qVnwfxJFWbLgkrmD9',
 }
 
 
@@ -231,16 +235,17 @@ zv.addEventListener('pointerup',up);zv.addEventListener('pointercancel',up);
 </script>"""
 
 
-# readable text version of the poster table. The poster image the centre supplied is only 343x479 px;
-# since 2026-11-11 the site shows a sharp re-render of the same hwpx instead (flyers/zoom/main.png),
-# but keep this text list too. Wording copied from the poster; do not edit content here.
+# readable text version of the poster table. Since 2026-11-19 the poster is the 1055x1491 image the user
+# supplied (its drawn QR did not decode, so the real site QR was pasted into the box); flyers/zoom/main.png is
+# the same image at 2x. The hwpx in flyers/원본 is the older poster. Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
     ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동', '(만 6세이나 입학 전 아동 포함)']),
-    ('접수 방법', ['2026.11.12일부터 10시부터 전화 및 방문접수 (평일 10시 ~ 18시)']),
-    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 다문화 가정', '선발기준: 정원의 70%는 단지내 아동으로 우선 배정합니다.', '정원 마감 전까지 선착순 접수 마감합니다.']),
+    ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 부모의 출퇴근 거리가 긴 경우', '선발기준: 정원의 70%는 단지내 아동으로 우선 배정합니다.']),
+    ('접수 기간', ['1차: 2026.11.23(월) 10시부터 ~ 11.27(금) 17시', 'QR접수: 아래 센터 위치에서 다닐 호점의 「신청하고 싶어요」를 눌러 주세요.']),
+    ('이용 시간', ['학기 중 13:00 ~ 20:00, 방학 중 09:00 ~ 18:00', '주말·공휴일 제외']),
     ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
-    ('이용 시간', ['학기 중: 13시 ~ 20시', '방학 중: 09시 ~ 18시', '(주말 공휴일 제외)']),
     ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
+    ('입소 서류', ['※ 입소 확정 후 개별 연락드립니다.', '원활한 등록을 위해 입소 방문 전까지 필요서류를 센터로 제출해 주시기 바랍니다.', '(기한 내 미제출 시 입소 취소가 될 수 있습니다.)']),
 ]
 info_html = '<div class="infobox">' + ''.join(
     f'<div class="row"><div class="k">{esc(k)}</div><div class="v">' + ''.join(f'<p>{esc(x)}</p>' for x in vs) + '</div></div>'
