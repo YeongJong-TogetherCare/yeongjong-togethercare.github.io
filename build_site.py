@@ -304,7 +304,7 @@ def center_rows(n, addr):
 
 centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호점</h3>{center_rows(n, addr)}</div>
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
-land = f"""<div class="hero"><h1>영종 다함께 돌봄센터 돌봄 신청</h1></div>
+land = f"""<div class="hero"><h1>영종구 다함께 돌봄센터</h1></div>
 {main_flyers()}
 <h2 class="sec">서류 확인</h2>
 {docs_html}
