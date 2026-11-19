@@ -260,10 +260,11 @@ LAND_CSS += """
 .infobox .v p{margin:0}
 """
 
+# selection-criteria.hwpx = 이용아동선정기준표.hwp saved as HWPX by Hangul COM 2026-11-20 (page render pixel-identical to the hwp).
 # forms/hwp-icon.png = Hangul document icon (Hwp.exe icon index 1, the .hwp/.hwpx DefaultIcon), trimmed to 98x112.
 # application documents the user supplied 2026-11-19 (original files, unchanged; 신청서류 replaced 23:47 판, order = 포스터 > 점수표 > 신청서류). ASCII paths; download= keeps the Korean name.
 DOCS = [
-    ('forms/selection-criteria.hwp', '이용아동선정기준표.hwp', '이용아동 선정기준표', '한글(hwp)'),
+    ('forms/selection-criteria.hwpx', '이용아동선정기준표.hwpx', '이용아동 선정기준표', '한글(hwpx)'),
     ('forms/application-docs.hwpx', '영종다함께돌봄센터 신청서류.hwpx', '신청서류 안내', '한글(hwpx)'),
 ]
 docs_html = ('<div class="docs">' + ''.join(
