@@ -261,16 +261,16 @@ LAND_CSS += """
 """
 
 # forms/hwp-icon.png = Hangul document icon (Hwp.exe icon index 1, the .hwp/.hwpx DefaultIcon), trimmed to 98x112.
-# application documents the user supplied 2026-11-19 (original files, unchanged). ASCII paths; download= keeps the Korean name.
+# application documents the user supplied 2026-11-19 (original files, unchanged; 신청서류 replaced 23:47 판, order = 포스터 > 점수표 > 신청서류). ASCII paths; download= keeps the Korean name.
 DOCS = [
-    ('forms/selection-criteria.hwp', '서식 이용아동선정기준표.hwp', '이용아동 선정기준표', '한글(hwp)'),
-    ('forms/application-guide.hwpx', '영종다함께돌봄센터 신청서류 안내.hwpx', '신청서류 안내', '한글(hwpx)'),
+    ('forms/selection-criteria.hwp', '이용아동선정기준표.hwp', '이용아동 선정기준표', '한글(hwp)'),
+    ('forms/application-docs.hwpx', '영종다함께돌봄센터 신청서류.hwpx', '신청서류 안내', '한글(hwpx)'),
 ]
 docs_html = ('<div class="docs">' + ''.join(
     f'<a class="doc" href="{esc(p)}" download="{esc(fn)}"><img class="di" src="forms/hwp-icon.png" alt="한글 파일" width="35" height="40">'
     f'<span class="dn">{esc(label)}</span><span class="dt">{esc(kind)} 내려받기</span></a>'
     for p, fn, label, kind in DOCS) +
-    '<p class="dnote">내려받아 작성하신 뒤, 위 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.<br>'
+    '<p class="dnote">내려받아 작성하신 뒤, 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.<br>'
     '한글 파일은 컴퓨터의 한글 프로그램이나 휴대폰의 「한컴오피스 Viewer」 앱으로 열 수 있어요.</p></div>')
 LAND_CSS += """
 .docs{margin:0 0 22px}
@@ -285,10 +285,10 @@ centers_html = ''.join(f"""<div class="center"><div class="info"><h3>{esc(n)}호
 <a class="apply c{n}" href="{esc(form_url(name))}"><span class="ico">{ICON}</span>신청하고 싶어요</a></div>""" for n, name, addr in CENTERS)
 land = f"""<div class="hero"><h1>영종 다함께 돌봄센터<br>돌봄 신청</h1></div>
 {main_flyers()}
-<h2 class="sec">모집 안내</h2>
-{info_html}
 <h2 class="sec">신청 서류 내려받기</h2>
 {docs_html}
+<h2 class="sec">모집 안내</h2>
+{info_html}
 <h2 class="sec">센터 위치</h2>
 {centers_html}
 <p class="note">누르면 그 호점의 구글 신청서가 열립니다. 칸을 채우고 「제출」을 눌러 주세요.</p>"""
