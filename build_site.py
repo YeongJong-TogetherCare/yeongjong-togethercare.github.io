@@ -235,9 +235,9 @@ zv.addEventListener('pointerup',up);zv.addEventListener('pointercancel',up);
 </script>"""
 
 
-# readable text version of the poster table. Since 2026-11-19 (18:14 판) the poster is the 1055x1491 image the user
-# supplied (its drawn QR did not decode, so the real site QR was pasted into the box); flyers/zoom/main.png is
-# the same image at 2x. The hwpx in flyers/원본 is the older poster. Wording copied from the poster; do not edit content here.
+# readable text version of the poster table. Since 2026-11-20 the poster is 최종포스터.png (1024x1536) from the user's
+# desktop, used unchanged for flyers/main.png and flyers/zoom/main.png (its QR decodes to SITE, checked with OpenCV).
+# The hwpx in flyers/원본 is an older poster. Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
     ('모집 대상', ['돌봄이 필요한 만 6세 ~ 12세 아동', '(만 6세이나 입학 전 아동 포함)']),
     ('우선 순위', ['맞벌이가정, 한부모가정, 다자녀가정, 초등 저학년, 부모의 출퇴근 거리가 긴 경우', '선발기준: 정원의 70%는 단지내 아동으로 우선 배정합니다.']),
@@ -261,12 +261,12 @@ LAND_CSS += """
 """
 
 # ---- documents shown as pictures like the poster (user 2026-11-20: 한글 파일 대신 이미지로) ----
-# flyers/score.png, flyers/documents.png = page copies (1240 px); flyers/zoom/*.png = 300 dpi renders by Hangul COM
-# (CreatePageImage) of 이용아동선정기준표.hwp and 영종다함께돌봄센터 신청서류.hwpx (both on the user's desktop 2026-11-19).
-# Order (user): 포스터 > 점수 확인(선정기준표) > 입소 서류 확인(신청서류 안내).
+# flyers/guide.png = page copy (1240 px); flyers/zoom/guide.png = 300 dpi render by Hangul COM (CreatePageImage) of
+# 영종다함께돌봄센터 신청서류 안내(큐알).hwpx (user's desktop 2026-11-20). That one page holds 신청서류 안내 and the
+# 선정기준표, so it replaced the two pictures (score.png, documents.png) used on 2026-11-20 morning.
 DOC_IMAGES = [
-    ('score.png', '1. 점수 확인', '이용아동 선정기준표', '항목별 점수를 더해 총점을 확인해 보세요. 총점이 높은 순으로 선정합니다.'),
-    ('documents.png', '2. 입소 서류 확인', '신청서류 안내', '필요한 서류를 확인하고, 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.'),
+    ('guide.png', '신청서류 안내', '제출서류 · 선정기준표',
+     '아래쪽 선정기준표로 점수를 확인하고, 필요한 서류를 준비해 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.'),
 ]
 docs_html = ''.join(
     f'<div class="docimg"><h3>{esc(step)} <span>{esc(title)}</span></h3><p class="dnote">{esc(note)}</p>'
