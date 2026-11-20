@@ -19,6 +19,7 @@ CENTERS = [  # name = exact option text in the form; address from the form descr
 ]
 CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-19 1055x1491 판)
 PHONE = {'8': '032-713-4491', '9': '032-713-4492', '10': '032-713-4493'}  # from the flyer (2026-11-19 판)
+APT = {'8': '제일풍경채디오션', '9': '오션파크모아엘가그랑데', '10': '영종센트럴푸르지오자이'}  # apartment complex, given by the user 2026-11-20
 EMAIL = {'8': 'wow0735@gmail.com', '9': 'kaku837@gmail.com', '10': 'yjdd100@gmail.com'}  # given by the user 2026-11-19
 def tel(n):
     out = '<a href="tel:' + PHONE[n].replace(') ', '-').replace(')', '-') + '">☎ ' + esc(PHONE[n]) + '</a>'
@@ -85,7 +86,7 @@ for n, name, addr in CENTERS:
 <p class="sub">홍보지를 보시고 아래 단추로 신청서를 작성해 주세요.</p>
 <section class="card">
 {flyer_html(n, name)}
-<p class="addr">위치: {esc(addr)} ({esc(CAPACITY[n])})<br>{tel(n)}</p>
+<p class="addr">단지: {esc(APT[n])}<br>위치: {esc(addr)} ({esc(CAPACITY[n])})<br>{tel(n)}</p>
 <a class="btn" href="{esc(form_url(name))}">{esc(n)}호점 신청하기</a>
 </section>
 <a class="link" href="{LINKTREE}">다른 호점 보기</a>
@@ -295,7 +296,7 @@ LAND_CSS += """
 def center_rows(n, addr):
     road, _, bld = addr.partition(', ')
     phone = PHONE[n]
-    rows = [('주소', esc(road) + '<br>' + esc(bld)), ('정원', esc(CAPACITY[n].replace('정원 ', ''))),
+    rows = [('단지', esc(APT[n])), ('주소', esc(road) + '<br>' + esc(bld)), ('정원', esc(CAPACITY[n].replace('정원 ', ''))),
             ('전화', f'<a href="tel:{esc(phone)}">{esc(phone)}</a>')]
     if n in EMAIL:
         rows.append(('메일', f'<a href="mailto:{esc(EMAIL[n])}">{esc(EMAIL[n])}</a>'))
