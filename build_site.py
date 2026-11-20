@@ -235,7 +235,7 @@ zv.addEventListener('pointerup',up);zv.addEventListener('pointercancel',up);
 </script>"""
 
 
-# readable text version of the poster table. Since 2026-11-20 the poster is 최종포스터.png (1024x1536) from the user's
+# readable text version of the poster table. Since 2026-11-20 14:05 the poster is KakaoTalk_20261120_135022229.png (1055x1491) from the user's
 # desktop, used unchanged for flyers/main.png and flyers/zoom/main.png (its QR decodes to SITE, checked with OpenCV).
 # The hwpx in flyers/원본 is an older poster. Wording copied from the poster; do not edit content here.
 POSTER_INFO = [
@@ -245,7 +245,7 @@ POSTER_INFO = [
     ('이용 시간', ['학기 중 13:00 ~ 20:00, 방학 중 09:00 ~ 18:00', '주말·공휴일 제외']),
     ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
     ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
-    ('입소 서류', ['QR 접수 후 필요서류는 직접 방문제출', '11월 30일(월) 10시부터 ~ 12월 2일(수) 18시 30분까지', '(기한 내 미제출 시 입소가 취소될 수 있습니다.)', '입소 확정 후 개별연락드립니다.']),
+    ('입소 서류', ['QR 접수 후 필요서류는 직접 방문제출', '1차: 2026.11.23(월) 10시부터 ~ 11.27(금) 17시', '(기한 내 미제출 시 입소가 취소될 수 있습니다.)', '입소 확정 후 개별연락드립니다.']),
     ('문의', ['※ 센터 내 담당 직원이 상주하고 있으나, 업무 진행으로 전화 연결이 원활하지 않을 수 있습니다.', '문의사항은 센터 방문 시 안내받으실 수 있으니 양해 부탁드립니다.']),
 ]
 info_html = '<div class="infobox">' + ''.join(
