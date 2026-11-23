@@ -295,9 +295,8 @@ LAND_CSS += """
 
 def center_rows(n, addr):
     road, _, bld = addr.partition(', ')
-    phone = PHONE[n]
-    rows = [('단지', esc(APT[n])), ('주소', esc(road) + '<br>' + esc(bld)), ('정원', esc(CAPACITY[n].replace('정원 ', ''))),
-            ('전화', f'<a href="tel:{esc(phone)}">{esc(phone)}</a>')]
+    # no phone row here: user asked 2026-11-23 to remove it (the poster says phone consultation is not available yet)
+    rows = [('단지', esc(APT[n])), ('주소', esc(road) + '<br>' + esc(bld)), ('정원', esc(CAPACITY[n].replace('정원 ', '')))]
     if n in EMAIL:
         rows.append(('메일', f'<a href="mailto:{esc(EMAIL[n])}">{esc(EMAIL[n])}</a>'))
     return '<dl class="rows">' + ''.join(f'<dt>{k}</dt><dd>{v}</dd>' for k, v in rows) + '</dl>'
