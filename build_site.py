@@ -17,7 +17,7 @@ CENTERS = [  # name = exact option text in the form; address from the form descr
     ('9', '다함께 돌봄센터 9호점', '영종대로565번길 20, 커뮤니티센터 지상 1층'),
     ('10', '다함께 돌봄센터 10호점', '은하수로 412, 커뮤니티센터 지하 1층'),
 ]
-CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-19 1055x1491 판)
+CAPACITY = {'8': '정원 20명', '9': '정원 35명', '10': '정원 20명'}  # from the flyer (flyers/main.png, 2026-11-23 PDF 판)
 PHONE = {'8': '032-713-4491', '9': '032-713-4492', '10': '032-713-4493'}  # from the flyer (2026-11-19 판)
 APT = {'8': '제일풍경채디오션', '9': '오션파크모아엘가그랑데', '10': '영종센트럴푸르지오자이'}  # apartment complex, given by the user 2026-11-20
 EMAIL = {'8': 'wow0735@gmail.com', '9': 'kaku837@gmail.com', '10': 'yjdd100@gmail.com'}  # given by the user 2026-11-19
@@ -125,7 +125,7 @@ ICON = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width
 
 def main_flyers():
     """Poster on the landing page. flyers/main.png is the on-page copy (1240 px wide);
-    flyers/zoom/main.png (2480 px, rendered from flyers/원본/*-현재판.hwpx) opens in the zoom viewer."""
+    flyers/zoom/main.png (2480 px, rendered from the 2026-11-23 poster PDF) opens in the zoom viewer."""
     fs = sorted(glob.glob(os.path.join(ROOT, 'flyers', 'main*.*')))
     out = []
     for f in fs:
@@ -246,8 +246,8 @@ POSTER_INFO = [
     ('이용 시간', ['학기 중 13:00 ~ 20:00, 방학 중 09:00 ~ 18:00', '주말·공휴일 제외']),
     ('이용 요금', ['정기돌봄 월 70,000원 / 일시돌봄 일 5,000원', '(간식비 포함) / 방학기간 중식 무상 지원']),
     ('프로그램', ['기본프로그램: 출결확인, 일상생활 지도, 간식제공', '활동프로그램: 독서지도, 신체활동, 음악, 미술 등 영종특화프로그램']),
-    ('입소 서류', ['QR 접수 후 필요서류는 직접 방문제출', '1차: 2026.11.23(월) 10시부터 ~ 11.27(금) 17시', '(기한 내 미제출 시 입소가 취소될 수 있습니다.)', '입소 확정 후 개별연락드립니다.']),
-    ('문의', ['※ 센터 내 담당 직원이 상주하고 있으나, 업무 진행으로 전화 연결이 원활하지 않을 수 있습니다.', '문의사항은 센터 방문 시 안내받으실 수 있으니 양해 부탁드립니다.']),
+    ('입소 서류', ['8·9호점: 11월 23일(월) 오전 10시부터 서류 접수', '10호점: 11월 25일(수) 오전 10시부터 서류 접수', 'QR 신청 아동은 입소 우선순위 및 선정 기준에 따라 검토 후 순차적으로 개별 연락드립니다.', '※ 입소 증빙서류 미제출 시 입소가 취소될 수 있습니다.']),
+    ('문의', ['현재 센터 개소 준비로 전화 상담이 어려운 점 양해 부탁드립니다.', '문의사항은 센터 방문 시 안내해 드리겠습니다.']),
 ]
 info_html = '<div class="infobox">' + ''.join(
     f'<div class="row"><div class="k">{esc(k)}</div><div class="v">' + ''.join(f'<p>{esc(x)}</p>' for x in vs) + '</div></div>'
