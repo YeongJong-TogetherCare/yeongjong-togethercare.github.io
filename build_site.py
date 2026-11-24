@@ -263,7 +263,7 @@ LAND_CSS += """
 
 # ---- documents shown as pictures like the poster (user 2026-11-20: 한글 파일 대신 이미지로) ----
 # flyers/guide.png = page copy (1240 px); flyers/zoom/guide.png = 300 dpi render by Hangul COM (CreatePageImage) of
-# 영종다함께돌봄센터 신청서류 안내(큐알).hwpx (user's desktop 2026-11-20). That one page holds 신청서류 안내 and the
+# 영종다함께돌봄센터 신청서류 안내(큐알).hwp (user's desktop 2026-11-24, final; source kept in flyers/원본/). That one page holds 신청서류 안내 and the
 # 선정기준표, so it replaced the two pictures (score.png, documents.png) used on 2026-11-20 morning.
 DOC_IMAGES = [
     ('guide.png', '신청서류 안내', '제출서류 · 선정기준표',
