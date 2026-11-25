@@ -263,11 +263,12 @@ LAND_CSS += """
 
 # ---- documents shown as pictures like the poster (user 2026-11-20: 한글 파일 대신 이미지로) ----
 # flyers/guide.png = page copy (1240 px); flyers/zoom/guide.png = 300 dpi render by Hangul COM (CreatePageImage) of
-# 영종다함께돌봄센터 신청서류 안내(큐알).hwp (user's desktop 2026-11-25, final phone numbers 713-4491/4492/4493; source kept in flyers/원본/). That one page holds 신청서류 안내 and the
-# 선정기준표, so it replaced the two pictures (score.png, documents.png) used on 2026-11-20 morning.
+# 영종구_다함께돌봄_신청서류안내_(큐알).hwp (user's desktop 2026-11-25 11:21, the last version; source kept in flyers/원본/).
+# That page holds 대상자 우선순위 and 제출서류 only; the 선정기준표 of earlier versions was dropped, so the caption no longer mentions it.
+# It replaced the two pictures (score.png, documents.png) used on 2026-11-20 morning.
 DOC_IMAGES = [
-    ('guide.png', '신청서류 안내', '제출서류 · 선정기준표',
-     '아래쪽 선정기준표로 점수를 확인하고, 필요한 서류를 준비해 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.'),
+    ('guide.png', '신청서류 안내', '대상자 우선순위 · 제출서류',
+     '대상자 우선순위와 필요한 서류를 확인하고, 아래 「입소 서류」 기간에 센터로 직접 방문해 제출해 주세요.'),
 ]
 docs_html = ''.join(
     f'<div class="docimg"><h3>{esc(step)} <span>{esc(title)}</span></h3><p class="dnote">{esc(note)}</p>'
